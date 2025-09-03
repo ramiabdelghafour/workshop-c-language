@@ -91,18 +91,15 @@ int main(int argc, char *argv[]) {
 			scanf("%d", &newquantite);
 			quantite[i] = newquantite;
 			
-			printf("\nle titre de livre: %s\n", titre[i]);
+			printf("\nla quantite du livre a ete change: \n");
+			printf("le titre de livre: %s\n", titre[i]);
 			printf("le auteur de livre: %s\n", auteur[i]);
 			printf("le prix de livre: %d\n", prix[i]);
 			printf("le quantite de livre: %d\n", quantite[i]);
 			
-			search=1;
+
 		}
 	}
-	if(search == 0){
-		printf("ce livre n'exist pas dans cette biblio!");
-	}
-	
 	
 	return 0;
 }
