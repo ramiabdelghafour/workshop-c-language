@@ -7,11 +7,12 @@
 typedef struct etudiant{
 	char nom[N];
 	char pernom[N];
-	int note[N];
+	int notes[N];
 }etudiant;
 int main(int argc, char *argv[]) {
 	etudiant e;
 	int nombre = 0;
+	int i;
 	printf("donner votre prenom: ");
 	scanf("%s", e.pernom);
 	
@@ -21,9 +22,17 @@ int main(int argc, char *argv[]) {
 	printf("donnner le nombre de vos notes: ");
 	scanf("%d", &nombre);
 	
+	for(i = 0; i < nombre; i++){
+		printf("entre N %d: ", i +1);
+		scanf("%d", &e.notes[i]);
+	}
+	
 	printf("votre prenom: %s\n", e.pernom);
 	printf("votre nom: %s\n", e.nom);
-	printf("votre : %d\n", e.note);
 	
+	for(i = 0; i < nombre; i++){
+		printf("vos notes: %d\n", e.notes[i]);
+
+	}
 	return 0;
 }
