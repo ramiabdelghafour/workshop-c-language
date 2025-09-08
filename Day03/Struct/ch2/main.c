@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 	printf("votre nom: %s\n", e.nom);
 	
 	for(i = 0; i < nombre; i++){
-		printf("vos notes: %d\n", e.notes[i]);
+		printf("note N %d: %d \n", i +1, e.notes[i]);
 
 	}
 	return 0;
