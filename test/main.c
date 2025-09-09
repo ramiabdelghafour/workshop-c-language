@@ -44,11 +44,23 @@ int fusion(int tab1[], int n1,int tab2[], int n2,int tab3[]){
 
 void bubbleSort(int tab[], int n){
 	int i, j, temp;
-	for(i = 0; i < n, i++){
-		for(j = 0; i < n; j++){
-			if()
+	for(i = 0; i < n - 1; i++){
+		for(j = 0; j < n - i -1; j++){
+			if(tab[j] > tab[j + 1]){
+				temp = tab[j];
+				tab[j] = tab[j + 1];
+				tab[j + 1] = temp;
+			}
 		}
 	}
+}
+
+int recherche(int tab[], int n, int val){
+    int i;
+    for(i = 0; i < n; i++){
+        if(tab[i] == val) return i; 
+    }
+    return -1; 
 }
 
 int main(int argc, char *argv[]) {
@@ -70,14 +82,23 @@ int main(int argc, char *argv[]) {
 	printf("\n 2eme tableau:\n");
 	afficher(tab2, n2);
 
-//tableau 3	
+//tableau 3 aved tri	
 	int tab3[n1 + n2];
 	int n3 = fusion(tab1, n1, tab2, n2, tab3);
-	fusion(tab1, n1, tab2, n2, tab3);
+
+	bubbleSort(tab3, n3);
 	printf("\n 3eme tableau:\n");
 	afficher(tab3, n3);
-
-//tableau trier
 	
+//recherche 
+	int val;
+	printf("enter la valeur rechercher:");
+	scanf("%d", &val);
+	int rechercher = recherche(tab3, n3, val);	
+    if(rechercher != -1){
+        printf("Valeur %d trouve a la position %d.\n", val, rechercher + 1);
+    } else {
+        printf("Valeur %d non trouve dans le tableau.\n", val);
+    }
 	return 0;
 }
