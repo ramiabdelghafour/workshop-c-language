@@ -27,10 +27,10 @@ void selectionSort(int tab[], int n){
 			if(tab[j] < tab[min]){
 				min = j;
 			}
-			temp = tab[i];
-			tab[i] = tab[min];
-			tab[min] = temp;
 		}
+		temp = tab[i];
+		tab[i] = tab[min];
+		tab[min] = temp;
 	}
 }
 
