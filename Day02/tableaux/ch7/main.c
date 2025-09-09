@@ -4,26 +4,33 @@
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main(int argc, char *argv[]) {
-	int i, j, n, max;
+	int n, i, j, temp;
 	
-	printf("donner la taille de tableau: ");
+	printf("donner la taille du tableau: ");
 	scanf("%d", &n);
 	
 	int tab[n];
 	
+	printf("\nenter les valeurs:\n");
 	for(i = 0; i < n; i++){
 		printf("tab[%d]: ", i + 1);
 		scanf("%d", &tab[i]);
 	}
 	
-	max = tab[0];
-	
 	for(i = 0; i < n; i++){
-		if(tab[i] > max){
-			max = tab[i];
+		for(j = 0; j < n - i -1; j++){
+			if(tab[j] > tab[j + 1] ){
+				temp = tab[j];
+				tab[j] = tab[j + 1];
+				tab[j + 1] = temp;
+			}
 		}
 	}
-	printf("le maximum: %d", max);
-
+	
+	printf("\nle tableau: \n");
+	for(i = 0; i < n; i++){
+		printf("tab[%d]: %d\n", i + 1, tab[i]);
+	}
+	
 	return 0;
 }

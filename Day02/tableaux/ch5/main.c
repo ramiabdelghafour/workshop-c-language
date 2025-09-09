@@ -4,9 +4,9 @@
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main(int argc, char *argv[]) {
-	int i, j, n, max;
+	int n, i, min;
 	
-	printf("donner la taille de tableau: ");
+	printf("donner la taille du tableau: ");
 	scanf("%d", &n);
 	
 	int tab[n];
@@ -16,14 +16,13 @@ int main(int argc, char *argv[]) {
 		scanf("%d", &tab[i]);
 	}
 	
-	max = tab[0];
-	
+	min = tab[0];
 	for(i = 0; i < n; i++){
-		if(tab[i] > max){
-			max = tab[i];
+		if(tab[i] < min){
+			min = tab[i];
 		}
 	}
-	printf("le maximum: %d", max);
-
+	
+	printf("le minimum est: %d", min);
 	return 0;
 }
