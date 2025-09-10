@@ -70,7 +70,7 @@ void modiffier_joueur(){
 	int i;
 	int choix;
 	
-	printf("Donner ID du joueur:");
+	printf("\nDonner ID du joueur:");
 	scanf("%d", &id);
 	
 	for(i =  0;i < nb_joueur; i++){
@@ -79,7 +79,7 @@ void modiffier_joueur(){
 			printf("%d\t%s\t%s\t%d\t%s\t%d\t%d\t%s\n",equipe[i].id, equipe[i].nom, equipe[i].prenom, 
 			equipe[i].numeroMaillot, equipe[i].poste, equipe[i].age, equipe[i].buts, equipe[i].statut);
 			
-			printf("1. Modifier le poste d`un joueur.\n");
+			printf("\n1. Modifier le poste d`un joueur.\n");
 			printf("2. Modifier l`age d`un joueur.\n");
 			printf("3. Modifier le nombre de buts marquer par un joueur.\n");
 			printf("votre choix: ");
@@ -107,12 +107,61 @@ void modiffier_joueur(){
 
 void supprimer_joueur(){
 	int id;
-}
-
-void rechercher_joueur(){
+	int i, j;
+	
+	printf("\ndonner id du joueur: ");
+	scanf("%d", &id);
+	
+	for(i = 0; i < nb_joueur; i++){
+		if(equipe[i].id == id){
+			for(j = i; j < nb_joueur - 1; i++){
+				equipe[j] = equipe[j + 1];
+			}
+			nb_joueur--;
+			equipe = realloc(equipe, sizeof(joueur) * nb_joueur);
+			printf("joueur supprime.");
+			return;	
+		}else{
+			printf("joueur non trouve");
+		}
+	}
 	
 }
 
+void rechercher_joueur(){
+	int id;
+	char name[50];
+	int choix;
+	int i;
+	
+	printf("1. Rechercher un joueur par ID.\n");
+	printf("2. Rechercher un joueur par Nom.\n");
+	printf("donner voitre choix: ");
+	scanf("%d", &choix);
+	
+	switch(choix){
+		case 1:
+			printf("enter ID du joueur: ");
+			scanf("%d", &id);
+			for(i = 0; i < nb_joueur; i++){
+				if(equipe[i].id == id){
+					printf("joueur touve.\n");
+					printf("ID\tNom\tPrenom\tNumero du maillot\tPoste\tAge\tButs\tStatut\n");
+					printf("%d\t%s\t%s\t%d\t%s\t%d\t%d\t%s\n",equipe[i].id, equipe[i].nom, equipe[i].prenom, 
+					equipe[i].numeroMaillot, equipe[i].poste, equipe[i].age, equipe[i].buts, equipe[i].statut);
+				}
+			}
+			break;
+		case 2:
+			printf("enter le Nom du joueur: ");
+			scanf("%s", &name);
+			break;
+	}
+}
+
+void statistiques(){
+	
+}
 
 void menu(){
 	int choix;
@@ -139,10 +188,13 @@ void menu(){
 				modiffier_joueur();
 				break;
 			case 4:
+				supprimer_joueur();
 				break;
 			case 5:
+				rechercher_joueur();
 				break;
 			case 6:
+				statistiques();
 				break;
 			case 7:
 				break;
