@@ -50,7 +50,7 @@ void initialiser_joueurs() {
     equipe[2].numero_maillot = 4;
     strcpy(equipe[2].poste, "Defenseur");
     equipe[2].age = 25;
-    equipe[2].buts = 2;
+    equipe[2].buts = 2; 
     strcpy(equipe[2].date_inscription, "2025-09-09");
     strcpy(equipe[2].statut, "titulaire");
     
@@ -158,6 +158,10 @@ void afficher_liste_joueur(){
 
 // trier par nom
 void trier_par_nom(){
+	if(nb_joueur == 0){
+		printf("Aucun joueur dans l`equipe.\n");
+		return;
+	}
 	int i, j;
 	for(i = 0; i < nb_joueur - 1; i++){
 		for(j = i + 1; j < nb_joueur; j++){
@@ -167,12 +171,16 @@ void trier_par_nom(){
 				equipe[j] = temp;	
 			}
 		}
-	}// and if the list is empty "not done yet"
+	}
 	afficher_liste_joueur();
 }
 
 // trier par age
 void trier_par_age(){
+	if(nb_joueur == 0){
+		printf("Aucun joueur dans l`equipe.\n");
+		return;
+	}
 	int i,j;
 	for(i = 0; i < nb_joueur; i++){
 		for(j = i + 1; j < nb_joueur - 1; j++){
@@ -181,20 +189,6 @@ void trier_par_age(){
 				equipe[i] = equipe[j];
 				equipe[j] = temp;
 			}	
-		}
-	}// and if the list is empty "not done yet"
-	afficher_liste_joueur();
-}
-
-// trier par poste
-void trier_par_poste(){
-	int i, j;
-	for(i = 0; j < nb_joueur; i++){
-		for(j = i + 1;j < nb_joueur - 1; j++){
-			if(strcmp(equipe[i].poste, equipe[j].poste) > 0);
-			joueur temp = equipe[i];
-			equipe[i] = equipe[j];
-			equipe[j] = temp;
 		}
 	}
 	afficher_liste_joueur();
@@ -205,6 +199,30 @@ void afficher_joueur(int index){
 	printf("ID\tNom\tPrenom\tNumero du maillot\tPoste\tAge\tButs\tdate inscription\tStatut\n");
 	printf("%d\t%s\t%s\t%d\t%s\t%d\t%d\t%s\n",equipe[index].id, equipe[index].nom, equipe[index].prenom, 
 	equipe[index].numero_maillot, equipe[index].poste, equipe[index].age, equipe[index].buts, equipe[index].date_inscription, equipe[index].statut);
+}
+
+// afficher par poste
+void afficher_par_poste(){
+	if(nb_joueur == 0){
+		printf("Aucun joueur dans l`equipe.\n");
+		return;
+	}
+	
+	char poste[20];
+	printf("Saisir le poste a rechercher (Gardien, Defenseur, Milieu, Attaquant): ");
+	scanf("%s", poste);
+	int i, p;
+	int trouve = 0;
+	
+	for(i = 0; i < nb_joueur; i++){
+		if(strcmp(equipe[i].poste, poste) == 0){
+			afficher_joueur(i);
+			trouve = 1;	
+		}
+	}
+	if(!trouve){
+		printf("Aucun joueur dans ce poste.\n");
+	}
 }
 
 // modifier un jouer
@@ -246,8 +264,7 @@ void modifier_joueur(){
 	}
 	if(!trouve){
 		printf("joueur non trouve.\n");
-	}	
-	
+	}		
 }
 
 // supprimer un joueur
@@ -372,7 +389,7 @@ void menu_afficher(){
 				trier_par_age();
 				break;
 			case 4:
-				trier_par_poste();
+				afficher_par_poste();
 				break;
 			default: 
 				printf("Choix invalide!");
