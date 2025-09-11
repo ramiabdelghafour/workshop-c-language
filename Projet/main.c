@@ -57,7 +57,6 @@ void initialiser_joueurs() {
     nouveau_id = nb_joueur + 1;
 }
 
-
 // ajouter un joueur
 void ajouter_joueur(){
 	joueur j;
@@ -101,7 +100,6 @@ void ajouter_plusieurs_joueurs(){
 	}
 }
 
-
 // afficher la list des joueurs
 void afficher_liste_joueur(){
 	int i;
@@ -121,19 +119,36 @@ void afficher_liste_joueur(){
 // trier par nom
 void trier_par_nom(){
 	int i, j;
-	
 	for(i = 0; i < nb_joueur - 1; i++){
 		for(j = i + 1; j < nb_joueur; j++){
 			if(strcmp(equipe[i].nom, equipe[j].nom) > 0){
-				joueur temp= equipe[i];
+				joueur temp = equipe[i];
 				equipe[i] =  equipe[j];
-				equipe[j] = temp;
-				
+				equipe[j] = temp;	
 			}
 		}
-	}
+	}// and if the list is empty "not done yet"
+	afficher_liste_joueur();
 }
 
+// trier par age
+void trier_par_age(){
+	int i,j;
+	for(i = 0; i < nb_joueur; i++){
+		for(j = i + 1; j < nb_joueur - 1; j++){
+			if(equipe[i].age < equipe[j].age){
+				joueur temp = equipe[i];
+				equipe[i] = equipe[j];
+				equipe[j] = temp;
+			}	
+		}
+	}// and if the list is empty "not done yet"
+	afficher_liste_joueur();
+}
+
+// trier par poste
+
+// afficher un seul joueur
 void afficher_joueur(int index){
 	printf("ID\tNom\tPrenom\tNumero du maillot\tPoste\tAge\tButs\tdate inscription\tStatut\n");
 	printf("%d\t%s\t%s\t%d\t%s\t%d\t%d\t%s\n",equipe[index].id, equipe[index].nom, equipe[index].prenom, 
@@ -189,7 +204,7 @@ void supprimer_joueur(){
 	int i, j;
 	int trouve = 0;
 	
-	printf("\ndonner id du joueur: ");
+	printf("\ndonner Id du joueur: ");
 	scanf("%d", &id);
 	
 	for(i = 0; i < nb_joueur; i++){
@@ -256,11 +271,13 @@ void statistiques(){
 	
 }
 
-// ----------- les menus -----------
+//                   --------------- les menus ---------------
+
+// menu ajouter
 void menu_ajouter(){
 	int choix;
 	do{
-		printf("1. Ajouter un joueur.\n");
+		printf("\n1. Ajouter un joueur.\n");
 		printf("2. Ajouter plusieurs joueurs.\n");
 		printf("0. Retour.\n");
 		printf("Enter votre choix: ");
@@ -279,6 +296,39 @@ void menu_ajouter(){
 }
 
 
+// menu afficher
+void menu_afficher(){
+	int choix;
+	do{
+		printf("\n1. Afficher tout.\n");
+		printf("2. Trier par le nom.\n");
+		printf("3. Trier par l`age.\n");
+		printf("4. Trier par  poste.\n");
+		printf("0. Retour\n");
+		printf("Enter votre choix: ");
+		scanf("%d", &choix);
+		switch(choix){
+			case 1:
+				afficher_liste_joueur();
+				break;
+			case 2:
+				trier_par_nom();
+				break;
+			case 3:
+				trier_par_age();
+				break;
+			case 4:
+				
+				break;
+			default: 
+				printf("Choix invalide!");
+		}
+		
+		
+	}while(choix != 0);
+}
+
+// menu principal
 void menu_principal(){
 	int choix;
 	do{
@@ -298,7 +348,7 @@ void menu_principal(){
 				menu_ajouter();
 				break;
 			case 2:
-				afficher_liste_joueur();
+				menu_afficher();
 				break;
 			case 3:
 				modifier_joueur();
@@ -319,6 +369,9 @@ void menu_principal(){
 		}
 	}while(choix != 7);
 }
+
+
+
 // mmaaaaaaaaaaaaaaaaaain
 int main(int argc, char *argv[]) {
 	initialiser_joueurs();
