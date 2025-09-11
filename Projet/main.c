@@ -42,7 +42,7 @@ void initialiser_joueurs() {
     equipe[1].age = 21;
     equipe[1].buts = 5;
     strcpy(equipe[1].date_inscription, "2025-09-10");
-    strcpy(equipe[1].statut, "remplaçant");
+    strcpy(equipe[1].statut, "remplaï¿½ant");
 
     equipe[2].id = 3;
     strcpy(equipe[2].nom, "Khalid");
@@ -65,7 +65,7 @@ void ajouter_joueur(){
 	j.id = nouveau_id++;
 	int choix;
 	
-	printf("enter les valeurs du joueur: \n");
+	printf("Enter les valeurs du joueur: \n");
 	printf("Nom: ");
 	scanf("%s", j.nom );
 	printf("Prenom: ");
@@ -104,7 +104,7 @@ void ajouter_joueur(){
 	do{
 		printf("Statut: ");
 		printf("1. Titulaire  ");
-		printf("2. Remplaçant  ");
+		printf("2. Remplaï¿½ant  ");
 		printf("\nEntrer votre choix: ");
 		scanf("%d", &choix);
 		switch(choix){
@@ -112,7 +112,7 @@ void ajouter_joueur(){
 				strcpy(j.statut, "Titulaire");
 				break;
 			case 2:
-				strcpy(j.statut, "Remplaçant");
+				strcpy(j.statut, "Remplaï¿½ant");
 				break;
 			default:
 				printf("Choix invalide, veuillez ressayer.\n");
@@ -215,7 +215,7 @@ void afficher_par_poste(){
 	char poste[20];
 	printf("Saisir le poste a rechercher (Gardien, Defenseur, Milieu, Attaquant): ");
 	scanf("%s", poste);
-	int i, p;
+	int i;
 	int trouve = 0;
 	
 	for(i = 0; i < nb_joueur; i++){
@@ -234,6 +234,7 @@ void afficher_par_poste(){
 // modifier un jouer
 void modifier_joueur(){
 	int id, i, choix;
+	joueur j;
 	int trouve = 0;
 	
 	printf("\nDonner ID du joueur:");
@@ -251,8 +252,31 @@ void modifier_joueur(){
 			
 			switch(choix){
 				case 1:
-					printf("Poste: ");
-					scanf("%s", equipe[i].poste);
+					do{
+						printf("Poste: ");
+						printf("1. Gardien  ");
+						printf("2. Defenseur  ");
+						printf("3. Milieu   ");
+						printf("4. Attaquant  ");
+						printf("\nEntrer votre choix: ");
+						scanf("%d", &choix);
+						switch(choix){
+							case 1:
+								strcpy(j.poste, "Gardien");
+								break;
+							case 2:
+								strcpy(j.poste, "Defenseur");
+								break;
+							case 3:
+								strcpy(j.poste, "Milieu");
+								break;
+							case 4:
+								strcpy(j.poste, "Attaquant");
+								break;
+								default:
+									printf("Choix invalide, veuillez ressayer.\n");
+					}
+					}while(choix < 1 || choix > 4);
 					break;
 				case 2:
 					printf("Age: ");
@@ -303,46 +327,32 @@ void supprimer_joueur(){
 //rechercher un joueur par id
 void rechercher_par_id(){
 	int id;
-	char nom[50];
-	int choix;
 	int i;
-	
-
-	
-	switch(choix){
-		case 1:
-			printf("enter ID du joueur: ");
-			scanf("%d", &id);
-			
-			for(i = 0; i < nb_joueur; i++){
-				if(equipe[i].id == id){
-					printf("joueur touve.\n");
-					afficher_joueur(i);
-				return;
-				}
-			}
-			printf("joueur non trouve.\n");
-			break;
-			
-		case 2:			
-			printf("enter le Nom du joueur: ");
-			scanf("%s", nom);
-			
-			for(i = 0; i < nb_joueur; i++){
-				if(strcmp(equipe[i].nom, nom) == 0){
-					afficher_joueur(i);
-				}
-			}
-			break;
-		default:
-			printf("Choix invalide, veuillez ressayer.\n");
-			
+	printf("Entrer l'ID du joueur: ");
+	scanf("%d", &id);
+	for(i = 0; i < nb_joueur; i++){
+		if(equipe[i].id == id){
+			printf("Joueur trouve.\n");
+			afficher_joueur(i);
+			return;
+		}
 	}
+	printf("Joueur non trouve.\n");
 }
 
 //rechercher un joueur par nom
 void rechercher_par_nom(){
-	
+	char nom[50];
+	int i;
+	printf("enter le Nom du joueur: ");
+	scanf("%s", nom);
+		for(i = 0; i < nb_joueur; i++){
+			if(strcmp(equipe[i].nom, nom) == 0){
+				afficher_joueur(i);
+				return;
+			}
+		}
+	printf("Joueur non trouve.\n");
 }
 
 //statistiques
