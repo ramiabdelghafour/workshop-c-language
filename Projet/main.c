@@ -3,7 +3,6 @@
 #include <string.h>
 #include <time.h>
 
-
 typedef struct {
 	int id;
 	char nom[50];
@@ -19,6 +18,45 @@ typedef struct {
 joueur *equipe = NULL;
 int nb_joueur = 0;
 int nouveau_id = 1;
+
+// des joueurs existants
+void initialiser_joueurs() {
+    nb_joueur = 3;
+    equipe = (joueur*)malloc(nb_joueur * sizeof(joueur));
+
+    equipe[0].id = 1;
+    strcpy(equipe[0].nom, "Rami");
+    strcpy(equipe[0].prenom, "Abdelghafour");
+    equipe[0].numero_maillot = 7;
+    strcpy(equipe[0].poste, "Attaquant");
+    equipe[0].age = 23;
+    equipe[0].buts = 10;
+    strcpy(equipe[0].date_inscription, "2025-09-11");
+    strcpy(equipe[0].statut, "Actif");
+
+    equipe[1].id = 2;
+    strcpy(equipe[1].nom, "Ahmed");
+    strcpy(equipe[1].prenom, "Youssef");
+    equipe[1].numero_maillot = 10;
+    strcpy(equipe[1].poste, "Milieu");
+    equipe[1].age = 21;
+    equipe[1].buts = 5;
+    strcpy(equipe[1].date_inscription, "2025-09-10");
+    strcpy(equipe[1].statut, "Actif");
+
+    equipe[2].id = 3;
+    strcpy(equipe[2].nom, "Khalid");
+    strcpy(equipe[2].prenom, "Samir");
+    equipe[2].numero_maillot = 4;
+    strcpy(equipe[2].poste, "Défenseur");
+    equipe[2].age = 25;
+    equipe[2].buts = 2;
+    strcpy(equipe[2].date_inscription, "2025-09-09");
+    strcpy(equipe[2].statut, "Actif");
+    
+    nouveau_id = nb_joueur + 1;
+}
+
 
 // ajouter un joueur
 void ajouter_joueur(){
@@ -82,6 +120,18 @@ void afficher_liste_joueur(){
 
 // trier par nom
 void trier_par_nom(){
+	int i, j;
+	
+	for(i = 0; i < nb_joueur - 1; i++){
+		for(j = i + 1; j < nb_joueur; j++){
+			if(strcmp(equipe[i].nom, equipe[j].nom) > 0){
+				joueur temp= equipe[i];
+				equipe[i] =  equipe[j];
+				equipe[j] = temp;
+				
+			}
+		}
+	}
 }
 
 void afficher_joueur(int index){
@@ -206,7 +256,30 @@ void statistiques(){
 	
 }
 
-void menu(){
+// ----------- les menus -----------
+void menu_ajouter(){
+	int choix;
+	do{
+		printf("1. Ajouter un joueur.\n");
+		printf("2. Ajouter plusieurs joueurs.\n");
+		printf("0. Retour.\n");
+		printf("Enter votre choix: ");
+		scanf("%d", &choix);
+		switch(choix){
+			case 1:
+				ajouter_joueur();
+				break;
+			case 2:
+				ajouter_plusieurs_joueurs();
+					break;
+			default: 
+				printf("Choix invalide!");	
+		}
+	}while(choix != 0);
+}
+
+
+void menu_principal(){
 	int choix;
 	do{
 		printf("\n--- Gestion Equipe de Football ---\n");
@@ -222,7 +295,7 @@ void menu(){
 	
 		switch(choix){
 			case 1:
-				ajouter_joueur();
+				menu_ajouter();
 				break;
 			case 2:
 				afficher_liste_joueur();
@@ -242,13 +315,14 @@ void menu(){
 			case 7:
 				break;
 			default: 
-				printf("choix invalide!");			
+				printf("Choix invalide!");			
 		}
 	}while(choix != 7);
 }
-
+// mmaaaaaaaaaaaaaaaaaain
 int main(int argc, char *argv[]) {
-	menu();
+	initialiser_joueurs();
+	menu_principal();
 	free(equipe);
 	return 0;
 }
