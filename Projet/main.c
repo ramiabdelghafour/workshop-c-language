@@ -32,7 +32,7 @@ void initialiser_joueurs() {
     equipe[0].age = 23;
     equipe[0].buts = 10;
     strcpy(equipe[0].date_inscription, "2025-09-11");
-    strcpy(equipe[0].statut, "Actif");
+    strcpy(equipe[0].statut, "titulaire");
 
     equipe[1].id = 2;
     strcpy(equipe[1].nom, "Ahmed");
@@ -42,17 +42,17 @@ void initialiser_joueurs() {
     equipe[1].age = 21;
     equipe[1].buts = 5;
     strcpy(equipe[1].date_inscription, "2025-09-10");
-    strcpy(equipe[1].statut, "Actif");
+    strcpy(equipe[1].statut, "remplaçant");
 
     equipe[2].id = 3;
     strcpy(equipe[2].nom, "Khalid");
     strcpy(equipe[2].prenom, "Samir");
     equipe[2].numero_maillot = 4;
-    strcpy(equipe[2].poste, "Défenseur");
+    strcpy(equipe[2].poste, "Defenseur");
     equipe[2].age = 25;
     equipe[2].buts = 2;
     strcpy(equipe[2].date_inscription, "2025-09-09");
-    strcpy(equipe[2].statut, "Actif");
+    strcpy(equipe[2].statut, "titulaire");
     
     nouveau_id = nb_joueur + 1;
 }
@@ -61,22 +61,62 @@ void initialiser_joueurs() {
 void ajouter_joueur(){
 	joueur j;
 	j.id = nouveau_id++;
+	int choix;
 	
 	printf("enter les valeurs du joueur: \n");
 	printf("Nom: ");
 	scanf("%s", j.nom );
-	printf("Prenom:");
+	printf("Prenom: ");
 	scanf("%s", j.prenom);
 	printf("Numero du maillot: ");
 	scanf("%d", &j.numero_maillot);
-	printf("Poste: ");
-	scanf("%s", j.poste);
+	do{
+		printf("Poste: ");
+		printf("1. Gardien  ");
+		printf("2. Defenseur  ");
+		printf("3. Milieu   ");
+		printf("4. Attaquant  ");
+		printf("\nEntrer votre choix: ");
+		scanf("%d", &choix);
+		switch(choix){
+			case 1:
+				strcpy(j.poste, "Gardien");
+				break;
+			case 2:
+				strcpy(j.poste, "Defenseur");
+				break;
+			case 3:
+				strcpy(j.poste, "Milieu");
+				break;
+			case 4:
+				strcpy(j.poste, "Attaquant");
+				break;
+				default:
+					printf("Choix invalide, veuillez ressayer.\n");
+	}
+	}while(choix < 1 || choix > 4);
 	printf("Age: ");
 	scanf("%d", &j.age);
 	printf("Buts: ");
 	scanf("%d", &j.buts);
-	printf("Statut: ");
-	scanf("%s", j.statut);
+	do{
+		printf("Statut: ");
+		printf("1. Titulaire  ");
+		printf("2. Remplaçant  ");
+		printf("\nEntrer votre choix: ");
+		scanf("%d", &choix);
+		switch(choix){
+			case 1:
+				strcpy(j.statut, "Titulaire");
+				break;
+			case 2:
+				strcpy(j.statut, "Remplaçant");
+				break;
+			default:
+				printf("Choix invalide, veuillez ressayer.\n");
+		}
+		
+	}while(choix < 1 || choix > 2);
 	
     time_t t = time(NULL);
     strftime(j.date_inscription, sizeof(j.date_inscription), "%Y-%m-%d", localtime(&t));
@@ -147,6 +187,18 @@ void trier_par_age(){
 }
 
 // trier par poste
+void trier_par_poste(){
+	int i, j;
+	for(i = 0; j < nb_joueur; i++){
+		for(j = i + 1;j < nb_joueur - 1; j++){
+			if(strcmp(equipe[i].poste, equipe[j].poste) > 0);
+			joueur temp = equipe[i];
+			equipe[i] = equipe[j];
+			equipe[j] = temp;
+		}
+	}
+	afficher_liste_joueur();
+}
 
 // afficher un seul joueur
 void afficher_joueur(int index){
@@ -188,7 +240,7 @@ void modifier_joueur(){
 					scanf("%d", &equipe[i].buts);
 					break;
 				default:
-					printf("choix invalid;");
+					printf("Choix invalide, veuillez ressayer.\n");
 			}
 		}
 	}
@@ -262,6 +314,8 @@ void rechercher_joueur(){
 				}
 			}
 			break;
+		default:
+			printf("Choix invalide, veuillez ressayer.\n");
 			
 	}
 }
@@ -318,7 +372,7 @@ void menu_afficher(){
 				trier_par_age();
 				break;
 			case 4:
-				
+				trier_par_poste();
 				break;
 			default: 
 				printf("Choix invalide!");
