@@ -37,10 +37,13 @@ void ajouter_joueur(){
 	scanf("%d", &j.age);
 	printf("Buts: ");
 	scanf("%d", &j.buts);
+	
 	printf("Statut: ");
 	scanf("%s", j.statut);
 	
-	// date inscription ineeded
+	
+    time_t t = time(NULL);
+    strftime(j.date_Inscription, sizeof(j.date_Inscription), "%Y-%m-%d", localtime(&t));
 
 	equipe = realloc(equipe, sizeof(joueur) * (nb_joueur + 1));
 	equipe[nb_joueur++] = j;
@@ -56,11 +59,11 @@ void afficher_liste_joueur(){
 		printf("Aucun joueur dans l`equipe.\n");
 		return;
 	}else{
-		printf("ID\tNom\tPrenom\tNumero du maillot\tPoste\tAge\tButs\tStatut\n");
+		printf("ID\tNom\tPrenom\tNumero du maillot\tPoste\tAge\tButs\tdateInscription\tStatut\n");
 		for(i = 0; i < nb_joueur; i++){
 			joueur j = equipe[i];
 			printf("%d\t%s\t%s\t%d\t%s\t%d\t%d\t%s\n",
-			j.id, j.nom, j.prenom, j.numeroMaillot, j.poste, j.age, j.buts, j.statut);	
+			j.id, j.nom, j.prenom, j.numeroMaillot, j.poste, j.age, j.buts, j.date_Inscription, j.statut);	
 		}
 	}
 }
@@ -130,7 +133,7 @@ void supprimer_joueur(){
 
 void rechercher_joueur(){
 	int id;
-	char name[50];
+	char nom[50];
 	int choix;
 	int i;
 	
@@ -143,6 +146,7 @@ void rechercher_joueur(){
 		case 1:
 			printf("enter ID du joueur: ");
 			scanf("%d", &id);
+			
 			for(i = 0; i < nb_joueur; i++){
 				if(equipe[i].id == id){
 					printf("joueur touve.\n");
@@ -152,9 +156,19 @@ void rechercher_joueur(){
 				}
 			}
 			break;
-		case 2:
+			
+		case 2:			
 			printf("enter le Nom du joueur: ");
-			scanf("%s", &name);
+			scanf("%s", nom);
+			
+			for(i = 0; i < nb_joueur; i++){
+				if(equipe[i].nom == nom){
+					printf("joueur touve.\n");
+					printf("ID\tNom\tPrenom\tNumero du maillot\tPoste\tAge\tButs\tStatut\n");
+					printf("%d\t%s\t%s\t%d\t%s\t%d\t%d\t%s\n",equipe[i].id, equipe[i].nom, equipe[i].prenom, 
+					equipe[i].numeroMaillot, equipe[i].poste, equipe[i].age, equipe[i].buts, equipe[i].statut);
+				}
+			}
 			break;
 	}
 }
