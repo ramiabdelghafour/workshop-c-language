@@ -57,6 +57,8 @@ void initialiser_joueurs() {
     nouveau_id = nb_joueur + 1;
 }
 
+//            ------------- l`ajout -------------
+
 // ajouter un joueur
 void ajouter_joueur(){
 	joueur j;
@@ -139,6 +141,8 @@ void ajouter_plusieurs_joueurs(){
 	 	ajouter_joueur();
 	}
 }
+
+//            ------------- l`affichage -------------
 
 // afficher la list des joueurs
 void afficher_liste_joueur(){
@@ -225,6 +229,8 @@ void afficher_par_poste(){
 	}
 }
 
+//            ------------- modification -------------
+
 // modifier un jouer
 void modifier_joueur(){
 	int id, i, choix;
@@ -235,9 +241,8 @@ void modifier_joueur(){
 	
 	for(i =  0;i < nb_joueur; i++){
 		if(equipe[i].id == id){
-			trouve = 1;
-			
 			afficher_joueur(i);
+			trouve = 1;
 			printf("\n1. Modifier le poste d`un joueur.\n");
 			printf("2. Modifier l`age d`un joueur.\n");
 			printf("3. Modifier le nombre de buts marquer par un joueur.\n");
@@ -293,18 +298,16 @@ void supprimer_joueur(){
 	}
 	
 }
+//            ------------- recherche-------------
 
-//rechercher un joueur
-void rechercher_joueur(){
+//rechercher un joueur par id
+void rechercher_par_id(){
 	int id;
 	char nom[50];
 	int choix;
 	int i;
 	
-	printf("1. Rechercher un joueur par ID.\n");
-	printf("2. Rechercher un joueur par Nom.\n");
-	printf("donner voitre choix: ");
-	scanf("%d", &choix);
+
 	
 	switch(choix){
 		case 1:
@@ -337,6 +340,11 @@ void rechercher_joueur(){
 	}
 }
 
+//rechercher un joueur par nom
+void rechercher_par_nom(){
+	
+}
+
 //statistiques
 void statistiques(){
 	
@@ -361,11 +369,10 @@ void menu_ajouter(){
 				ajouter_plusieurs_joueurs();
 					break;
 			default: 
-				printf("Choix invalide!");	
+				printf("Choix invalide, veuillez ressayer.\n");	
 		}
 	}while(choix != 0);
 }
-
 
 // menu afficher
 void menu_afficher(){
@@ -392,10 +399,32 @@ void menu_afficher(){
 				afficher_par_poste();
 				break;
 			default: 
-				printf("Choix invalide!");
+				printf("Choix invalide, veuillez ressayer.\n");
 		}
 		
 		
+	}while(choix != 0);
+}
+
+// menu rechercher
+void menu_rechercher(){
+	int choix;
+	do{
+	printf("1. Rechercher un joueur par ID.\n");
+	printf("2. Rechercher un joueur par Nom.\n");
+	printf("0. Retour\n");
+	printf("Enter votre choix: ");
+	scanf("%d", &choix);
+		switch(choix){
+			case 1:
+				rechercher_par_id();
+				break;
+			case 2:
+				rechercher_par_nom();
+				break;
+			default:
+				printf("Choix invalide, veuillez ressayer.\n");
+		}
 	}while(choix != 0);
 }
 
@@ -428,7 +457,7 @@ void menu_principal(){
 				supprimer_joueur();
 				break;
 			case 5:
-				rechercher_joueur();
+				menu_afficher();
 				break;
 			case 6:
 				statistiques();
@@ -436,7 +465,7 @@ void menu_principal(){
 			case 7:
 				break;
 			default: 
-				printf("Choix invalide!");			
+				printf("Choix invalide, veuillez ressayer.\n");		
 		}
 	}while(choix != 7);
 }
