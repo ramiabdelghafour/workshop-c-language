@@ -26,42 +26,44 @@ void clear_screen() {
 
 // des joueurs existants
 void initialiser_joueurs() {
-    nb_joueur = 3;
-    equipe = (joueur*)malloc(nb_joueur * sizeof(joueur));
+    nb_joueur = 10;
+    equipe = malloc(nb_joueur * sizeof(joueur));
 
-    equipe[0].id = 1;
-    strcpy(equipe[0].nom, "Rami");
-    strcpy(equipe[0].prenom, "Abdelghafour");
-    equipe[0].numero_maillot = 7;
-    strcpy(equipe[0].poste, "Attaquant");
-    equipe[0].age = 23;
-    equipe[0].buts = 10;
-    strcpy(equipe[0].date_inscription, "2025-09-11");
-    strcpy(equipe[0].statut, "titulaire");
+    equipe[0] = (joueur){1, "Rami", "Abdelghafour", 7, "Attaquant", 23, 10, "2025-09-11", "Titulaire"};
+    equipe[1] = (joueur){2, "Sami", "Ahmed", 10, "Milieu", 21, 5, "2025-09-10", "Remplacant"};
+    equipe[2] = (joueur){3, "Zoukrane", "Khalid", 4, "Defenseur", 25, 2, "2025-09-09", "Titulaire"};
+    equipe[3] = (joueur){4, "Nbou", "Brahim", 1, "Gardien", 27, 0, "2025-09-08", "Titulaire"};
+    equipe[4] = (joueur){5, "Mirrou", "Fathi", 11, "Attaquant", 22, 8, "2025-09-07", "Remplacant"};
+    equipe[5] = (joueur){6, "Hachim", "Saad", 6, "Milieu", 24, 6, "2025-09-06", "Titulaire"};
+    equipe[6] = (joueur){7, "Saad", "Oussama", 5, "Defenseur", 26, 1, "2025-09-05", "Titulaire"};
+    equipe[7] = (joueur){8, "Fattahi", "Mehdi", 8, "Milieu", 20, 3, "2025-09-04", "Remplacant"};
+    equipe[8] = (joueur){9, "Fillali", "Zouhair", 9, "Attaquant", 23, 12, "2025-09-03", "Titulaire"};
+    equipe[9] = (joueur){10, "Farsi", "Ayman", 3, "Defenseur", 28, 0, "2025-09-02", "Titulaire"};
 
-    equipe[1].id = 2;
-    strcpy(equipe[1].nom, "Ahmed");
-    strcpy(equipe[1].prenom, "Youssef");
-    equipe[1].numero_maillot = 10;
-    strcpy(equipe[1].poste, "Milieu");
-    equipe[1].age = 21;
-    equipe[1].buts = 5;
-    strcpy(equipe[1].date_inscription, "2025-09-10");
-    strcpy(equipe[1].statut, "remplacant");
-
-    equipe[2].id = 3;
-    strcpy(equipe[2].nom, "Khalid");
-    strcpy(equipe[2].prenom, "Samir");
-    equipe[2].numero_maillot = 4;
-    strcpy(equipe[2].poste, "Defenseur");
-    equipe[2].age = 25;
-    equipe[2].buts = 2; 
-    strcpy(equipe[2].date_inscription, "2025-09-09");
-    strcpy(equipe[2].statut, "titulaire");
-    
     nouveau_id = nb_joueur + 1;
 }
 
+
+// -------------style-------------
+//header
+void afficher_header() {
+    printf("\n========================================================================================================================\n");
+    printf("| %-3s | %-12s | %-18s | %-7s | %-10s | %-3s | %-4s | %-16s | %-10s |\n",
+           "ID", "NOM", "PRENOM", "MAILLOT", "POSTE", "AGE", "BUTS", "DATE INSCRIPTION", "STATUT");
+    printf("========================================================================================================================\n");
+}
+
+//row
+void afficher_row(joueur j) {
+    printf("| %-3d | %-12s | %-18s | %-7d | %-10s | %-3d | %-4d | %-16s | %-10s |\n",
+           j.id, j.nom, j.prenom, j.numero_maillot, j.poste,
+           j.age, j.buts, j.date_inscription, j.statut);
+}
+
+//footer
+void afficher_footer() {
+    printf("========================================================================================================================\n");
+}
 //            ------------- l`ajout -------------
 
 // ajouter un joueur
@@ -77,12 +79,9 @@ void ajouter_joueur(){
 	scanf("%s", j.prenom);
 	printf("Numero du maillot: ");
 	scanf("%d", &j.numero_maillot);
+	
 	do{
-		printf("Poste: ");
-		printf("1. Gardien  ");
-		printf("2. Defenseur  ");
-		printf("3. Milieu   ");
-		printf("4. Attaquant  ");
+		printf("Poste: 1.Gardien, 2.Defenseur, 3.Milieu, 4.Attaquant ");
 		printf("\nEntrer votre choix: ");
 		scanf("%d", &choix);
 		switch(choix){
@@ -100,7 +99,7 @@ void ajouter_joueur(){
 				break;
 				default:
 					printf("Choix invalide, veuillez ressayer.\n");
-	}
+		}
 	}while(choix < 1 || choix > 4);
 	printf("Age: ");
 	scanf("%d", &j.age);
@@ -156,12 +155,11 @@ void afficher_liste_joueur(){
 		printf("Aucun joueur dans l`equipe.\n");
 		return;
 	}else{
-		printf("ID\tNom\tPrenom\tNumero du maillot\tPoste\tAge\tButs\t\tdate inscription\tStatut\n");
+		afficher_header();
 		for(i = 0; i < nb_joueur; i++){
-			joueur j = equipe[i];
-			printf("%d\t%s\t%s\t%d\t%s\t%d\t%d\t\t%s\t%s\n",
-			j.id, j.nom, j.prenom, j.numero_maillot, j.poste, j.age, j.buts, j.date_inscription, j.statut);	
+			afficher_row(equipe[i]);	
 		}
+		afficher_footer();
 	}
 }
 
@@ -204,9 +202,10 @@ void trier_par_age(){
 }
 
 // afficher un seul joueur
-void afficher_joueur(int index){
-	printf("%d\t%s\t%s\t%d\t%s\t%d\t%d\t%s\t%s\n",equipe[index].id, equipe[index].nom, equipe[index].prenom, 
-	equipe[index].numero_maillot, equipe[index].poste, equipe[index].age, equipe[index].buts, equipe[index].date_inscription, equipe[index].statut);
+void afficher_joueur(int index) {
+    afficher_header();
+    afficher_row(equipe[index]);
+    afficher_footer();
 }
 
 // afficher par poste
@@ -224,8 +223,7 @@ void afficher_par_poste(){
 	
 	for(i = 0; i < nb_joueur; i++){
 		if(strcmp(equipe[i].poste, poste) == 0){
-			printf("ID\tNom\tPrenom\tNumero du maillot\tPoste\tAge\tButs\tdate inscription\tStatut\n");
-			afficher_joueur(i);
+			afficher_joueur(i); 
 			trouve = 1;	
 		}
 	}
@@ -233,6 +231,8 @@ void afficher_par_poste(){
 		printf("Aucun joueur dans ce poste.\n");
 	}
 }
+
+
 
 //            ------------- modification -------------
 
@@ -242,12 +242,12 @@ void modifier_joueur(){
 	joueur j;
 	int trouve = 0;
 	
-	printf("\nDonner ID du joueur:");
+	printf("\nDonner ID du joueur: ");
 	scanf("%d", &id);
 	
 	for(i =  0;i < nb_joueur; i++){
 		if(equipe[i].id == id){
-			printf("ID\tNom\tPrenom\tNumero du maillot\tPoste\tAge\tButs\tdate inscription\tStatut\n");
+			
 			afficher_joueur(i);
 			trouve = 1;
 			printf("\n1. Modifier le poste d`un joueur.\n");
@@ -304,11 +304,10 @@ void modifier_joueur(){
 
 // supprimer un joueur
 void supprimer_joueur(){
-	int id;
-	int i, j;
+	int id, i, j;
 	int trouve = 0;
 	
-	printf("\ndonner Id du joueur: ");
+	printf("\nDonner Id du joueur: ");
 	scanf("%d", &id);
 	
 	for(i = 0; i < nb_joueur; i++){
@@ -320,7 +319,8 @@ void supprimer_joueur(){
 			equipe = realloc(equipe, sizeof(joueur) * nb_joueur);
 			printf("joueur supprime.\n");
 			trouve = 1;
-			break;	
+			break;
+
 		}
 	}
 	if(!trouve){
@@ -339,7 +339,6 @@ void rechercher_par_id(){
 	for(i = 0; i < nb_joueur; i++){
 		if(equipe[i].id == id){
 			printf("Joueur trouve.\n");
-			printf("ID\tNom\tPrenom\tNumero du maillot\tPoste\tAge\tButs\tdate inscription\tStatut\n");
 			afficher_joueur(i);
 			return;
 		}
@@ -351,17 +350,21 @@ void rechercher_par_id(){
 void rechercher_par_nom(){
 	char nom[50];
 	int i;
-	printf("enter le Nom du joueur: ");
+	int trouve = 0;
+	printf("Enter le Nom du joueur: ");
 	scanf("%s", nom);
+	 afficher_header();
 		for(i = 0; i < nb_joueur; i++){
 			if(strcmp(equipe[i].nom, nom) == 0){
 				printf("Joueur trouve.\n");
-				printf("ID\tNom\tPrenom\tNumero du maillot\tPoste\tAge\tButs\tdate inscription\tStatut\n");
-				afficher_joueur(i);
-				return;
+				 afficher_row(equipe[i]);
+            	trouve = 1;
 			}
 		}
-	printf("Joueur non trouve.\n");
+		afficher_footer();
+		if (!trouve) {
+		printf("Joueur non trouve.\n");
+	}
 }
 
 //statistiques
@@ -375,13 +378,15 @@ void statistiques(){
     int i;
     do {
 		clear_screen();
-        printf("\n--- Statistiques ---\n");
-        printf("1. Nombre total de joueurs.\n");
-        printf("2. Age moyen des joueurs.\n");
-        printf("3. Joueurs ayant marque plus de X buts.\n");
-        printf("4. Meilleur buteur.\n");
-        printf("5. Joueur le plus jeune et le plus age.\n");
-        printf("0. Retour.\n");
+        printf("==========================================\n");
+        printf("           MENU - STATISTIQUE           \n");
+        printf("==========================================\n");
+        printf("[1]. Nombre total de joueurs.\n");
+        printf("[2]. Age moyen des joueurs.\n");
+        printf("[3]. Joueurs ayant marque plus de X buts.\n");
+        printf("[4]. Meilleur buteur.\n");
+        printf("[5]. Joueur le plus jeune et le plus age.\n");
+        printf("[0]. Retour.\n");
         printf("Votre choix: ");
         scanf("%d", &choix);
 
@@ -404,13 +409,14 @@ void statistiques(){
                 printf("Entrer le nombre minimum de buts: ");
                 scanf("%d", &x);
                 int trouve = 0;
+                afficher_header();
                 for (i = 0; i < nb_joueur; i++) {
                     if (equipe[i].buts > x) {
-						printf("ID\tNom\tPrenom\tNumero du maillot\tPoste\tAge\tButs\tdate inscription\tStatut\n");
-                        afficher_joueur(i);
+						afficher_row(equipe[i]);
                         trouve = 1;
                     }
                 }
+                afficher_footer();
                 if (!trouve) {
                     printf("Aucun joueur n'a marque plus de %d buts.\n", x);
                 }
@@ -462,14 +468,20 @@ void statistiques(){
 void menu_ajouter(){
 	int choix;
 	do{
-		printf("\n1. Ajouter un joueur.\n");
-		printf("2. Ajouter plusieurs joueurs.\n");
-		printf("0. Retour.\n");
+        clear_screen();
+        printf("==========================================\n");
+        printf("           MENU - AJOUTER JOUEUR          \n");
+        printf("==========================================\n");
+        printf("[1]. Ajouter un joueur\n");
+        printf("[2]. Ajouter plusieurs joueurs\n");
+        printf("[0]. Retour\n");
+        printf("------------------------------------------\n");
 		printf("Enter votre choix: ");
 		scanf("%d", &choix);
 		switch(choix){
 			case 1:
 				ajouter_joueur();
+				system("pause");
 				break;
 			case 2:
 				ajouter_plusieurs_joueurs();
@@ -486,16 +498,21 @@ void menu_ajouter(){
 void menu_afficher(){
 	int choix;
 	do{
-		printf("\n1. Afficher tout.\n");
-		printf("2. Trier par le nom.\n");
-		printf("3. Trier par l`age.\n");
-		printf("4. Trier par  poste.\n");
-		printf("0. Retour\n");
+		clear_screen();
+        printf("==========================================\n");
+        printf("          MENU - AFFICHER JOUEURS         \n");
+        printf("==========================================\n");
+		printf("[1]. Afficher tout.\n");
+		printf("[2]. Trier par le nom.\n");
+		printf("[3]. Trier par l`age.\n");
+		printf("[4]. Trier par  poste.\n");
+		printf("[0]. Retour\n");
 		printf("Enter votre choix: ");
 		scanf("%d", &choix);
 		switch(choix){
 			case 1:
 				afficher_liste_joueur();
+				system("pause");
 				break;
 			case 2:
 				trier_par_nom();
@@ -518,22 +535,26 @@ void menu_afficher(){
 void menu_rechercher(){
 	int choix;
 	do{
-	printf("1. Rechercher un joueur par ID.\n");
-	printf("2. Rechercher un joueur par Nom.\n");
-	printf("0. Retour\n");
-	printf("Enter votre choix: ");
-	scanf("%d", &choix);
-		switch(choix){
-			case 1:
-				rechercher_par_id();
-				break;
-			case 2:
-				rechercher_par_nom();
-				break;
-			case 0:
-				break;
-			default:
-				printf("Choix invalide, veuillez ressayer.\n");
+		clear_screen();
+        printf("==========================================\n");
+        printf("         MENU - RECHERCHER JOUEURS         \n");
+        printf("==========================================\n");	
+		printf("[1]. Rechercher un joueur par ID.\n");
+		printf("[2]. Rechercher un joueur par Nom.\n");
+		printf("[0]. Retour\n");
+		printf("Enter votre choix: ");
+		scanf("%d", &choix);
+			switch(choix){
+				case 1:
+					rechercher_par_id();
+						break;
+				case 2:
+					rechercher_par_nom();
+					break;
+				case 0:
+					break;
+				default:
+					printf("Choix invalide, veuillez ressayer.\n");
 		}
 	}while(choix != 0);
 }
@@ -542,15 +563,18 @@ void menu_rechercher(){
 void menu_principal(){
 	int choix;
 	do{
-		printf("\n--- Gestion Equipe de Football ---\n");
-		printf("1. Ajouter un joueur ou plusieurs. \n");
-		printf("2. Afficher la liste des joueurs. \n");
-		printf("3. Modifier un joueur. \n");
-		printf("4. Supprimer un joueur. \n");
-		printf("5. Rechercher un joueur. \n");
-		printf("6. Statistiques.\n");
-		printf("7. Quitter.\n");
-		printf("votre choix: ");
+		clear_screen();
+        printf("==========================================\n");
+        printf("        GESTION EQUIPE DE FOOTBALL        \n");
+        printf("==========================================\n");
+		printf("[1]. Ajouter un joueur ou plusieurs. \n");
+		printf("[2]. Afficher la liste des joueurs. \n");
+		printf("[3]. Modifier un joueur. \n");
+		printf("[4]. Supprimer un joueur. \n");
+		printf("[5]. Rechercher un joueur. \n");
+		printf("[6]. Statistiques.\n");
+		printf("[7]. Quitter.\n");
+		printf("Entrer votre choix: ");
 		scanf("%d", &choix);
 
 		switch(choix){
