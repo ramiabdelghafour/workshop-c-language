@@ -77,9 +77,20 @@ void ajouter_joueur(){
 	scanf("%s", j.nom );
 	printf("Prenom: ");
 	scanf("%s", j.prenom);
-	printf("Numero du maillot: ");
-	scanf("%d", &j.numero_maillot);
-	
+	int existe;
+	do{
+		printf("Numero du maillot: ");
+		scanf("%d", &j.numero_maillot);
+		existe = 0;
+		int i;
+	    for(i = 0; i < nb_joueur; i++){
+	        if(equipe[i].numero_maillot == j.numero_maillot){
+	            printf("Ce numero est deja utilise. Choisir un autre.\n");
+	            existe = 1;
+	            break;
+	        }
+	    }
+	}while(existe);
 	do{
 		printf("Poste: 1.Gardien, 2.Defenseur, 3.Milieu, 4.Attaquant ");
 		printf("\nEntrer votre choix: ");
@@ -130,9 +141,6 @@ void ajouter_joueur(){
 	equipe = realloc(equipe, sizeof(joueur) * (nb_joueur + 1));
 	equipe[nb_joueur++] = j;
 
-	if(j.buts >= 10){
-		printf("le Star d`equipe\n");
-	}
 }
 
 // ajouter plusieur joueurs
@@ -145,6 +153,7 @@ void ajouter_plusieurs_joueurs(){
 	 	ajouter_joueur();
 	}
 }
+
 
 //            ------------- l`affichage -------------
 
@@ -172,7 +181,7 @@ void trier_par_nom(){
 	int i, j;
 	for(i = 0; i < nb_joueur - 1; i++){
 		for(j = i + 1; j < nb_joueur; j++){
-			if(strcmp(equipe[i].nom, equipe[j].nom) > 0){
+			if(strcasecmp(equipe[i].nom, equipe[j].nom) > 0){
 				joueur temp = equipe[i];
 				equipe[i] =  equipe[j];
 				equipe[j] = temp;	
@@ -191,7 +200,7 @@ void trier_par_age(){
 	int i,j;
 	for(i = 0; i < nb_joueur - 1; i++){
 		for(j = i + 1; j < nb_joueur; j++){
-			if(equipe[i].age < equipe[j].age){
+			if(equipe[i].age > equipe[j].age){
 				joueur temp = equipe[i];
 				equipe[i] = equipe[j];
 				equipe[j] = temp;
@@ -222,7 +231,7 @@ void afficher_par_poste(){
 	int trouve = 0;
 	afficher_header();
 	for(i = 0; i < nb_joueur; i++){
-		if(strcmp(equipe[i].poste, poste) == 0){
+		if(strcasecmp(equipe[i].poste, poste) == 0){
 			afficher_row(equipe[i]);
 			trouve = 1;	
 		}
