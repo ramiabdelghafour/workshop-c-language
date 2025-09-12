@@ -29,7 +29,7 @@ void initialiser_joueurs() {
     nb_joueur = 10;
     equipe = malloc(nb_joueur * sizeof(joueur));
 
-    equipe[0] = (joueur){1, "Rami", "Abdelghafour", 7, "Attaquant", 23, 10, "2025-09-11", "Titulaire"};
+    equipe[0] = (joueur){1, "Zaki", "Houssam", 7, "Attaquant", 23, 10, "2025-09-11", "Titulaire"};
     equipe[1] = (joueur){2, "Sami", "Ahmed", 10, "Milieu", 21, 5, "2025-09-10", "Remplacant"};
     equipe[2] = (joueur){3, "Zoukrane", "Khalid", 4, "Defenseur", 25, 2, "2025-09-09", "Titulaire"};
     equipe[3] = (joueur){4, "Nbou", "Brahim", 1, "Gardien", 27, 0, "2025-09-08", "Titulaire"};
@@ -47,10 +47,10 @@ void initialiser_joueurs() {
 // -------------style-------------
 //header
 void afficher_header() {
-    printf("\n========================================================================================================================\n");
+    printf("\n===============================================================================================================\n");
     printf("| %-3s | %-12s | %-18s | %-7s | %-10s | %-3s | %-4s | %-16s | %-10s |\n",
            "ID", "NOM", "PRENOM", "MAILLOT", "POSTE", "AGE", "BUTS", "DATE INSCRIPTION", "STATUT");
-    printf("========================================================================================================================\n");
+    printf("===============================================================================================================\n");
 }
 
 //row
@@ -62,8 +62,9 @@ void afficher_row(joueur j) {
 
 //footer
 void afficher_footer() {
-    printf("========================================================================================================================\n");
+    printf("===============================================================================================================\n");
 }
+
 //            ------------- l`ajout -------------
 
 // ajouter un joueur
@@ -85,7 +86,7 @@ void ajouter_joueur(){
 		int i;
 	    for(i = 0; i < nb_joueur; i++){
 	        if(equipe[i].numero_maillot == j.numero_maillot){
-	            printf("Ce numero est deja utilise. Choisir un autre.\n");
+	            printf("Ce numero est deja utilise! Choisir un autre.\n");
 	            existe = 1;
 	            break;
 	        }
@@ -248,11 +249,12 @@ void afficher_par_poste(){
 
 // modifier un jouer
 void modifier_joueur(){
+	clear_screen();
 	int id, i, choix;
 	joueur j;
 	int trouve = 0;
 	
-	printf("\nDonner ID du joueur: ");
+	printf("\nDonner ID du joueur a modifier: ");
 	scanf("%d", &id);
 	
 	for(i =  0;i < nb_joueur; i++){
@@ -314,6 +316,7 @@ void modifier_joueur(){
 
 // supprimer un joueur
 void supprimer_joueur(){
+	clear_screen();
 	int id, i, j;
 	int trouve = 0;
 	
@@ -365,7 +368,7 @@ void rechercher_par_nom(){
 	scanf("%s", nom);
 	 afficher_header();
 		for(i = 0; i < nb_joueur; i++){
-			if(strcmp(equipe[i].nom, nom) == 0){
+			if(strcasecmp(equipe[i].nom, nom) == 0){
 				 afficher_row(equipe[i]);
             	trouve = 1;
 			}
@@ -610,9 +613,11 @@ void menu_principal(){
 				break;
 			case 3:
 				modifier_joueur();
+				system("pause");
 				break;
 			case 4:
 				supprimer_joueur();
+				system("pause");
 				break;
 			case 5:
 				menu_rechercher();
@@ -623,7 +628,8 @@ void menu_principal(){
 			case 7:
 				break;
 			default: 
-				printf("Choix invalide, veuillez ressayer.\n");		
+				printf("Choix invalide, veuillez ressayer.\n");
+				system("pause");		
 		}
 	}while(choix != 7);
 }
