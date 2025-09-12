@@ -220,13 +220,14 @@ void afficher_par_poste(){
 	scanf("%s", poste);
 	int i;
 	int trouve = 0;
-	
+	afficher_header();
 	for(i = 0; i < nb_joueur; i++){
 		if(strcmp(equipe[i].poste, poste) == 0){
-			afficher_joueur(i); 
+			afficher_row(equipe[i]);
 			trouve = 1;	
 		}
 	}
+	afficher_footer();
 	if(!trouve){
 		printf("Aucun joueur dans ce poste.\n");
 	}
@@ -356,7 +357,6 @@ void rechercher_par_nom(){
 	 afficher_header();
 		for(i = 0; i < nb_joueur; i++){
 			if(strcmp(equipe[i].nom, nom) == 0){
-				printf("Joueur trouve.\n");
 				 afficher_row(equipe[i]);
             	trouve = 1;
 			}
@@ -391,17 +391,19 @@ void statistiques(){
         scanf("%d", &choix);
 
         switch (choix) {
-            case 1: { 
+            case 1: 
                 printf("Nombre total de joueurs: %d\n", nb_joueur);
+                system("pause");
                 break;
-            }
+            
             case 2: { 
                 int somme = 0;
-                for (i = 0; i < nb_joueur; i++) {
+                for (i = 0; i < nb_joueur; i++){
                     somme += equipe[i].age;
                 }
                 float moyenne = (float)somme / nb_joueur;
                 printf("Age moyen des joueurs: %.2f\n", moyenne);
+                system("pause");
                 break;
             }
             case 3: { 
@@ -410,22 +412,23 @@ void statistiques(){
                 scanf("%d", &x);
                 int trouve = 0;
                 afficher_header();
-                for (i = 0; i < nb_joueur; i++) {
-                    if (equipe[i].buts > x) {
+                for (i = 0; i < nb_joueur; i++){
+                    if (equipe[i].buts > x){
 						afficher_row(equipe[i]);
                         trouve = 1;
                     }
                 }
                 afficher_footer();
-                if (!trouve) {
+                if (!trouve){
                     printf("Aucun joueur n'a marque plus de %d buts.\n", x);
                 }
+                system("pause");
                 break;
             }
             case 4: { 
                 int max_buts = equipe[0].buts;
                 int index = 0;
-                for (i = 1; i < nb_joueur; i++) {
+                for (i = 1; i < nb_joueur; i++){
                     if (equipe[i].buts > max_buts) {
                         max_buts = equipe[i].buts;
                         index = i;
@@ -433,13 +436,14 @@ void statistiques(){
                 }
                 printf("Meilleur buteur:\n");
                 afficher_joueur(index);
+                system("pause");
                 break;
             }
             case 5: { 
                 int min_age = equipe[0].age, max_age = equipe[0].age;
                 int index_min = 0, index_max = 0;
-                for (i = 1; i < nb_joueur; i++) {
-                    if (equipe[i].age < min_age) {
+                for (i = 1; i < nb_joueur; i++){
+                    if (equipe[i].age < min_age){
                         min_age = equipe[i].age;
                         index_min = i;
                     }
@@ -452,12 +456,14 @@ void statistiques(){
                 afficher_joueur(index_min);
                 printf("Joueur le plus age:\n");
                 afficher_joueur(index_max);
+                system("pause");
                 break;
             }
             case 0:
                 break;
             default:
                 printf("Choix invalide, veuillez ressayer.\n");
+                system("pause");
         }
     } while (choix != 0);
 }
@@ -485,11 +491,13 @@ void menu_ajouter(){
 				break;
 			case 2:
 				ajouter_plusieurs_joueurs();
+				system("pause");
 					break;
 			case 0:
                 break;
 			default: 
 				printf("Choix invalide, veuillez ressayer.\n");	
+				system("pause");
 		}
 	}while(choix != 0);
 }
@@ -516,17 +524,21 @@ void menu_afficher(){
 				break;
 			case 2:
 				trier_par_nom();
+				system("pause");
 				break;
 			case 3:
 				trier_par_age();
+				system("pause");
 				break;
 			case 4:
 				afficher_par_poste();
+				system("pause");
 				break;
 			case 0:
                 break;
 			default: 
 				printf("Choix invalide, veuillez ressayer.\n");
+				system("pause");
 		}
 	}while(choix != 0);
 }
@@ -547,14 +559,17 @@ void menu_rechercher(){
 			switch(choix){
 				case 1:
 					rechercher_par_id();
+					system("pause");
 						break;
 				case 2:
 					rechercher_par_nom();
+					system("pause");
 					break;
 				case 0:
 					break;
 				default:
 					printf("Choix invalide, veuillez ressayer.\n");
+					system("pause");
 		}
 	}while(choix != 0);
 }
