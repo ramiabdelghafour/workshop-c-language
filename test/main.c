@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
 	printf("\n 1er tableau:\n");
 	afficher(tab1, n1);
 
-//tableau 1
+//tableau 2
 	printf("\ndonner la taille du 2eme tab: ");
 	scanf("%d", &n2);
 	int tab2[n2];
